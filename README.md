@@ -1,7 +1,7 @@
 # Pratyahara NERVE
 
 **Status:** Draft v0.1.0
-**Paper:** [Pratyahara: A Neural Tissue Defense Model for Detecting Compromised Agents in Multi-Agent Networks](https://doi.org/10.5281/zenodo.PENDING)
+**Paper:** [Pratyahara: A Neural Tissue Defense Model for Detecting Compromised Agents in Multi-Agent Networks](https://doi.org/10.5281/zenodo.19628589)
 **Extension URI:** `https://github.com/ravikiran438/pratyahara-nerve/v1`
 **License:** Apache 2.0
 
@@ -98,12 +98,10 @@ validator behavior.
                   Compromised Agents in Multi-Agent Networks},
   year         = {2026},
   publisher    = {Zenodo},
-  doi          = {},
-  url          = {}
+  doi          = {10.5281/zenodo.19628589},
+  url          = {https://doi.org/10.5281/zenodo.19628589}
 }
 ```
-
-DOI will be added once the paper is published on Zenodo.
 
 ## Contributing
 
