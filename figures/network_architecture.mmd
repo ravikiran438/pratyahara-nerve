@@ -1,0 +1,20 @@
+graph TD
+    P[Principal] --> PA[Personal Agent]
+    PA -->|A2A| PR[Pricing Agent]
+    PA -->|A2A| SC[Scheduling Agent]
+    PA -->|A2A| PM[Payments Agent]
+    PR -->|MCP| PRS[Pricing MCP Server]
+    SC -->|MCP| CMS[Calendar MCP Server]
+    PM -->|MCP| BMS[Banking MCP Server]
+
+    MO1[MicroglialObserver 1]:::observer -.->|monitors| PR
+    MO1 -.->|monitors| SC
+    MO2[MicroglialObserver 2]:::observer -.->|monitors| SC
+    MO2 -.->|monitors| PM
+    MO3[MicroglialObserver 3]:::observer -.->|monitors| PR
+    MO3 -.->|monitors| PM
+
+    HT[HomeostasisTrace]:::health -.->|network health| PA
+
+    classDef observer fill:#fff3cd,stroke:#ffc107
+    classDef health fill:#d4edda,stroke:#28a745

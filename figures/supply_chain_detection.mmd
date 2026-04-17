@@ -1,0 +1,23 @@
+graph TD
+    CD[Compromised Dependency]:::compromised --> A1[Agent A<br/>drift: 3%]
+    CD --> A2[Agent B<br/>drift: 2%]
+    CD --> A3[Agent C<br/>drift: 4%]
+
+    MO1[Observer 1] -.->|within threshold ✓| A1
+    MO2[Observer 2] -.->|within threshold ✓| A2
+    MO3[Observer 3] -.->|within threshold ✓| A3
+
+    HT[HomeostasisTrace]:::health
+
+    A1 -->|activation shift| HT
+    A2 -->|activation shift| HT
+    A3 -->|activation shift| HT
+
+    HT -->|15% of agents shifted<br/>correlation: 0.89| ALERT[SUPPLY CHAIN ALERT<br/>stable → stressed]:::alert
+
+    ALERT -->|tighten all channels| R1[Permeability restricted]
+    ALERT -->|increase scan freq| R2[Observers accelerated]
+
+    classDef compromised fill:#f8d7da,stroke:#dc3545
+    classDef health fill:#d4edda,stroke:#28a745
+    classDef alert fill:#fff3cd,stroke:#ffc107

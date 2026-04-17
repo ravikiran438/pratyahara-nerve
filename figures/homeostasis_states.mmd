@@ -1,0 +1,12 @@
+stateDiagram-v2
+    [*] --> stable
+
+    stable --> stressed: anomaly_density > threshold_1\nOR pruning_rate_7d > threshold_2
+
+    stressed --> critical: anomaly_density > threshold_3\nOR cascade_events > threshold_4\nOR consensus_rate < threshold_5
+
+    critical --> recovery: anomaly_density < threshold_1\nAND consensus_rate > threshold_5\n(sustained 24h)
+
+    recovery --> stable: pruning_rate < threshold_2\nAND entropy in healthy range\n(sustained 72h)
+
+    note right of critical: All channels tighten\nto max restriction

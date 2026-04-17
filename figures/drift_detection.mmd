@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant B as Behavioral Baseline
+    participant A as Pricing Agent
+    participant MO as MicroglialObserver
+    participant SC as SynapticChannel
+    participant NTE as NeuralTrustEnvelope
+
+    Note over A: Interaction 100: cosine dist 0.02 ✓
+    MO->>A: scan fingerprint
+    MO-->>MO: deviation within threshold
+
+    Note over A: Interaction 500: cosine dist 0.08 ✓
+    MO->>A: scan fingerprint
+    MO-->>MO: deviation within threshold
+
+    Note over A: Interaction 1000: cosine dist 0.18 ✗
+    MO->>A: scan fingerprint
+    MO-->>MO: EXCEEDS fingerprint_drift (0.15)
+    MO->>MO: state: surveilling → activated
+
+    MO->>NTE: reduce trust_score (decay_rate: 0.05)
+    NTE->>SC: attenuate channel
+    Note over SC: state: active → attenuated
+
+    MO->>MO: cascade to peer observers
