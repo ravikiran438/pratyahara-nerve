@@ -78,6 +78,31 @@ checking. N-5 (Quarantine Freeze) requires pre/post comparison that the
 current TLA+ encoding does not capture; it is enforced by the Pydantic
 validator and test suite instead.
 
+## Extensions
+
+NERVE ships with an optional extension that refines drift detection by
+conditioning it on a published capability surface. Agents that do not
+opt in continue to operate under the core NERVE single-fingerprint
+drift model.
+
+| Extension | URI | Adds | Paper |
+|---|---|---|---|
+| [Yathartha](./extensions/yathartha/) | `https://github.com/ravikiran438/pratyahara-nerve/extensions/yathartha/v1` | `CapabilityRegion`, `ProbeBatteryResult`, `CapabilitySurface`, `SurfaceChangeEvent`; invariants **N-16 Coverage-Conditional Drift**, **N-17 Probe Battery Maintenance**, **N-18 Capability Surface Integrity** | *[Yathartha: A Protocol-Layer Treatment of Jagged Intelligence in Autonomous Agent Networks](https://doi.org/10.5281/zenodo.19659633)* (Zenodo DOI 10.5281/zenodo.19659633) |
+
+**Why Yathartha exists.** Without a published capability surface, a
+`MicroglialObserver` cannot distinguish an agent that has *drifted* on a
+task it once handled from an agent that was *always incompetent* at that
+task. The first is a signal; the second is jaggedness (Mollick, Kellogg,
+Gans). Flagging jaggedness as drift produces false positives. Yathartha
+adds the surface primitive that lets observers condition drift detection
+on a recorded baseline.
+
+**Status.** Reference implementation complete. Full TLA+ spec with Init,
+Next, Spec, and the three safety invariants under
+[`extensions/yathartha/Yathartha.tla`](./extensions/yathartha/Yathartha.tla).
+Python code under [`src/nerve/extensions/yathartha/`](./src/nerve/extensions/yathartha/).
+21 tests under [`tests/extensions/test_yathartha.py`](./tests/extensions/test_yathartha.py).
+
 ## Running Tests
 
 ```bash
@@ -86,8 +111,9 @@ pip install -e ".[test]"
 pytest -v
 ```
 
-39 tests covering type construction, bounds, invariant violations, and
-validator behavior.
+84 tests covering type construction, bounds, invariant violations,
+validator behavior, MCP server tools, and the Yathartha extension
+(N-16 through N-18).
 
 ## Citation
 
