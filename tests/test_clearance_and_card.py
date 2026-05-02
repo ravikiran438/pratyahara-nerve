@@ -21,7 +21,7 @@ from nerve.types import (
 
 def test_extension_uri_is_stable():
     assert NERVE_EXTENSION_URI == (
-        "https://github.com/ravikiran438/pratyahara-nerve/v1"
+        "https://ravikiran438.github.io/pratyahara-nerve/v1"
     )
 
 

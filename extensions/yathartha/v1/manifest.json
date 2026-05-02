@@ -1,7 +1,7 @@
 {
   "manifest_version": "1.0.0",
   "extension": {
-    "uri": "https://github.com/ravikiran438/pratyahara-nerve/extensions/yathartha/v1",
+    "uri": "https://ravikiran438.github.io/pratyahara-nerve/extensions/yathartha/v1",
     "name": "Yathartha Capability-Surface Extension",
     "description": "Distinguishes drift from jaggedness by requiring an observed capability baseline before flagging behavioral anomalies.",
     "version": "1.0.0",

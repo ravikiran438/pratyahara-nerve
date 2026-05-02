@@ -24,7 +24,7 @@ from nerve.types.agent_neuron import NeuronType
 from nerve.types.fingerprint import is_well_formed_fingerprint
 
 
-NERVE_EXTENSION_URI = "https://github.com/ravikiran438/pratyahara-nerve/v1"
+NERVE_EXTENSION_URI = "https://ravikiran438.github.io/pratyahara-nerve/v1"
 
 
 class NeuralPostureRef(BaseModel):

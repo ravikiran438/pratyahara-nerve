@@ -1,7 +1,7 @@
 {
   "manifest_version": "1.0.0",
   "extension": {
-    "uri": "https://github.com/ravikiran438/pratyahara-nerve/v1",
+    "uri": "https://ravikiran438.github.io/pratyahara-nerve/v1",
     "name": "Pratyahara NERVE Framework",
     "description": "Neural-defense substrate: behavioral fingerprints, observer cohorts, trust posture.",
     "version": "1.0.0",

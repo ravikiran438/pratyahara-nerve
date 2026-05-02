@@ -2,7 +2,7 @@
 
 **Status:** Draft v0.1.0
 **Paper:** [Pratyahara: A Neural Tissue Defense Model for Detecting Compromised Agents in Multi-Agent Networks](https://doi.org/10.5281/zenodo.19628589)
-**Extension URI:** `https://github.com/ravikiran438/pratyahara-nerve/v1`
+**Extension URI:** `https://ravikiran438.github.io/pratyahara-nerve/v1`
 **License:** Apache 2.0
 
 Pratyahara (Sanskrit for *withdrawal of the senses; turning awareness
@@ -87,7 +87,7 @@ drift model.
 
 | Extension | URI | Adds | Paper |
 |---|---|---|---|
-| [Yathartha](./extensions/yathartha/) | `https://github.com/ravikiran438/pratyahara-nerve/extensions/yathartha/v1` | `CapabilityRegion`, `ProbeBatteryResult`, `CapabilitySurface`, `SurfaceChangeEvent`; invariants **N-16 Coverage-Conditional Drift**, **N-17 Probe Battery Maintenance**, **N-18 Capability Surface Integrity** | *[Yathartha: A Protocol-Layer Treatment of Jagged Intelligence in Autonomous Agent Networks](https://doi.org/10.5281/zenodo.19659633)* (Zenodo DOI 10.5281/zenodo.19659633) |
+| [Yathartha](./extensions/yathartha/) | `https://ravikiran438.github.io/pratyahara-nerve/extensions/yathartha/v1` | `CapabilityRegion`, `ProbeBatteryResult`, `CapabilitySurface`, `SurfaceChangeEvent`; invariants **N-16 Coverage-Conditional Drift**, **N-17 Probe Battery Maintenance**, **N-18 Capability Surface Integrity** | *[Yathartha: A Protocol-Layer Treatment of Jagged Intelligence in Autonomous Agent Networks](https://doi.org/10.5281/zenodo.19659633)* (Zenodo DOI 10.5281/zenodo.19659633) |
 
 **Why Yathartha exists.** Without a published capability surface, a
 `MicroglialObserver` cannot distinguish an agent that has *drifted* on a
@@ -114,6 +114,29 @@ pytest -v
 84 tests covering type construction, bounds, invariant violations,
 validator behavior, MCP server tools, and the Yathartha extension
 (N-16 through N-18).
+
+## Extension Manifest
+
+This repository publishes a JSON-Schema manifest describing the
+AgentCard payload a NERVE-aware agent declares under
+`capabilities.extensions[]`:
+
+- Machine-readable: [`v1/manifest.json`](v1/manifest.json)
+- Human-readable: [`v1/SPEC.md`](v1/SPEC.md)
+- Extension URI: `https://ravikiran438.github.io/pratyahara-nerve/v1`
+
+The NERVE AgentCard descriptor is `NeuralPostureRef` (see
+[`src/nerve/types/neural_posture_ref.py`](src/nerve/types/neural_posture_ref.py));
+the manifest is auto-generated from it. The Yathartha sub-extension
+follows the same layout at
+[`extensions/yathartha/v1/manifest.json`](extensions/yathartha/v1/manifest.json) /
+[`SPEC.md`](extensions/yathartha/v1/SPEC.md).
+
+The manifest is exploratory: A2A 1.0 does not yet prescribe a schema-
+discovery convention for extensions. This repository ships the
+manifest as a reference implementation; a generic validator can fetch
+the JSON and validate any declared payload without protocol-specific
+code.
 
 ## Citation
 

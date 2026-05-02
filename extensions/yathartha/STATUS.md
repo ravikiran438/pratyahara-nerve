@@ -1,7 +1,7 @@
 # Yathartha: Status
 
 **Stage:** Reference implementation
-**Extension URI:** https://github.com/ravikiran438/pratyahara-nerve/extensions/yathartha/v1
+**Extension URI:** https://ravikiran438.github.io/pratyahara-nerve/extensions/yathartha/v1
 **First published:** 2026-04-19
 **Depends on:** NERVE Core v0.1+
 **Maintainer:** Ravi Kiran Kadaboina (@ravikiran438)

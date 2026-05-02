@@ -9,7 +9,7 @@ from __future__ import annotations
 def test_nerve_core_extension_uri():
     from nerve.types import NERVE_EXTENSION_URI
     assert NERVE_EXTENSION_URI == (
-        "https://github.com/ravikiran438/pratyahara-nerve/v1"
+        "https://ravikiran438.github.io/pratyahara-nerve/v1"
     )
 
 
