@@ -20,6 +20,7 @@ from .validators import (
 )
 
 __all__ = [
+    "EXTENSION_URI",
     "CapabilityRegion",
     "CapabilitySurface",
     "ProbeBatteryResult",
@@ -31,3 +32,8 @@ __all__ = [
     "check_coverage_conditional_drift",
     "check_probe_battery_maintenance",
 ]
+
+EXTENSION_URI = (
+    "https://github.com/ravikiran438/pratyahara-nerve/"
+    "extensions/yathartha/v1"
+)

@@ -28,8 +28,12 @@ from pydantic import ValidationError
 
 from nerve.types import (
     HomeostasisTrace,
+    NerveEnvelope,
+    NeuralPostureRef,
     NeuralTrustEnvelope,
     SynapticChannel,
+    is_well_formed_fingerprint,
+    verify_behavioral_fingerprint,
 )
 from nerve.validators import (
     AsymmetricTrustError,
@@ -278,6 +282,56 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
             "required": ["before", "after", "events"],
         },
     },
+    "validate_neural_posture_ref": {
+        "description": (
+            "Validate a NeuralPostureRef payload (the body of the "
+            "AgentCard.capabilities.extensions[] entry whose URI equals "
+            "NERVE_EXTENSION_URI). Verifies version + neuron_type + the "
+            "well-formed fingerprint shape + N-1 (≥2 distinct observers)."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {"ref": {"type": "object"}},
+            "required": ["ref"],
+        },
+    },
+    "validate_nerve_envelope": {
+        "description": (
+            "Validate a NerveEnvelope payload (the per-message metadata "
+            "block carried under message.metadata[NERVE_EXTENSION_URI]). "
+            "Verifies the typed structure of trust, channel, and "
+            "permeability_clearance fields."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {"envelope": {"type": "object"}},
+            "required": ["envelope"],
+        },
+    },
+    "validate_behavioral_fingerprint": {
+        "description": (
+            "Verify a behavioral_fingerprint string. If only "
+            "'fingerprint' is supplied, performs the structural "
+            "well-formedness check (sha256:<64-hex>). If 'embedding' "
+            "is also supplied, recomputes the canonical fingerprint and "
+            "rejects on mismatch."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "fingerprint": {"type": "string"},
+                "embedding": {
+                    "type": "array",
+                    "items": {"type": "number"},
+                    "description": (
+                        "Optional. When present, the canonical fingerprint "
+                        "is recomputed and compared against the claim."
+                    ),
+                },
+            },
+            "required": ["fingerprint"],
+        },
+    },
 }
 
 
@@ -423,6 +477,48 @@ def handle_validate_probe_battery_maintenance(arguments: dict[str, Any]) -> str:
     return _ok({"comparison": "compatible"})
 
 
+def handle_validate_neural_posture_ref(arguments: dict[str, Any]) -> str:
+    ref_payload = arguments.get("ref")
+    if not isinstance(ref_payload, dict):
+        raise ToolInvocationError("expected object under key 'ref'")
+    _parse(NeuralPostureRef, ref_payload, "ref")
+    return _ok({"ref": "valid"})
+
+
+def handle_validate_nerve_envelope(arguments: dict[str, Any]) -> str:
+    env_payload = arguments.get("envelope")
+    if not isinstance(env_payload, dict):
+        raise ToolInvocationError("expected object under key 'envelope'")
+    _parse(NerveEnvelope, env_payload, "envelope")
+    return _ok({"envelope": "valid"})
+
+
+def handle_validate_behavioral_fingerprint(arguments: dict[str, Any]) -> str:
+    fp = arguments.get("fingerprint")
+    if not isinstance(fp, str) or not fp:
+        raise ToolInvocationError("fingerprint must be a non-empty string")
+    if not is_well_formed_fingerprint(fp):
+        return _fail(
+            f"fingerprint {fp!r} is not a well-formed sha256:<64-hex> value"
+        )
+    embedding = arguments.get("embedding")
+    if embedding is not None:
+        if not isinstance(embedding, list) or not all(
+            isinstance(x, (int, float)) and not isinstance(x, bool)
+            for x in embedding
+        ):
+            raise ToolInvocationError("embedding must be a list of numbers")
+        if not embedding:
+            raise ToolInvocationError("embedding must be non-empty")
+        if not verify_behavioral_fingerprint(fp, embedding):
+            return _fail(
+                "fingerprint does not match canonical computation over "
+                "the supplied embedding"
+            )
+        return _ok({"fingerprint": "matches embedding"})
+    return _ok({"fingerprint": "well-formed"})
+
+
 def handle_validate_capability_surface_integrity(
     arguments: dict[str, Any],
 ) -> str:
@@ -454,6 +550,10 @@ HANDLERS: dict[str, Any] = {
     "validate_coverage_conditional_drift": handle_validate_coverage_conditional_drift,
     "validate_probe_battery_maintenance": handle_validate_probe_battery_maintenance,
     "validate_capability_surface_integrity": handle_validate_capability_surface_integrity,
+    # AgentCard descriptor + per-message envelope + fingerprint
+    "validate_neural_posture_ref": handle_validate_neural_posture_ref,
+    "validate_nerve_envelope": handle_validate_nerve_envelope,
+    "validate_behavioral_fingerprint": handle_validate_behavioral_fingerprint,
 }
 
 

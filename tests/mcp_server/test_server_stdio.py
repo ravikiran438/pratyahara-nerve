@@ -41,6 +41,10 @@ async def test_server_lists_tools_over_stdio():
         "validate_coverage_conditional_drift",
         "validate_probe_battery_maintenance",
         "validate_capability_surface_integrity",
+        # AgentCard descriptor + per-message envelope + fingerprint (3)
+        "validate_neural_posture_ref",
+        "validate_nerve_envelope",
+        "validate_behavioral_fingerprint",
     }
     assert names == expected
 

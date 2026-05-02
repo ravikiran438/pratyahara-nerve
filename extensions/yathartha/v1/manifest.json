@@ -1,0 +1,23 @@
+{
+  "manifest_version": "1.0.0",
+  "extension": {
+    "uri": "https://github.com/ravikiran438/pratyahara-nerve/extensions/yathartha/v1",
+    "name": "Yathartha Capability-Surface Extension",
+    "description": "Distinguishes drift from jaggedness by requiring an observed capability baseline before flagging behavioral anomalies.",
+    "version": "1.0.0",
+    "publisher": "Ravi Kiran Kadaboina",
+    "human_readable_spec": "https://doi.org/10.5281/zenodo.19659633"
+  },
+  "agent_card_payload_schema": {
+    "type": "object",
+    "title": "OpaquePayload",
+    "description": "This extension declares itself by URI presence and does not constrain the AgentCard payload. Validators accept any object.",
+    "additionalProperties": true
+  },
+  "wire_artefacts": [],
+  "invariants": [
+    "N-16: drift is flagged only for tasks in covered, non-stale CapabilityRegions.",
+    "N-17: a battery_version change requires a full re-baseline; cross-version comparisons are forbidden.",
+    "N-18: every covered_regions transition is accompanied by a SurfaceChangeEvent."
+  ]
+}

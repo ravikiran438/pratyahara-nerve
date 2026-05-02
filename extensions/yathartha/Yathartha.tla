@@ -92,7 +92,13 @@ Probe(a, r, score) ==
     /\ UNCHANGED <<batteryVersion, uncoveredPolicy, clockTick, driftFlags>>
 
 \* Tick the abstract clock (used for staleness checks).
+\*
+\* TLC bound: ``clockTick`` is bounded at 2 * RefreshCadence so the
+\* state space stays finite. The invariants under test only depend on
+\* whether the clock has crossed the staleness boundary, so this bound
+\* is sufficient. Production deployments use unbounded Naturals.
 Tick ==
+    /\ clockTick < 2 * RefreshCadence
     /\ clockTick' = clockTick + 1
     /\ UNCHANGED <<surface, covered, batteryVersion, lastRefreshAt,
                    uncoveredPolicy, driftFlags, surfaceEvents>>
@@ -145,15 +151,24 @@ Spec == Init /\ [][Next]_yVars
 \* Safety properties (N-16, N-17, N-18)
 \* ─────────────────────────────────────────────────────────────────────
 
-\* N-16 Coverage-Conditional Drift: every drift flag references a covered
-\* (agent, region) that is still fresh (not stale).
-CoverageConditionalDrift ==
-    \A f \in driftFlags :
-        LET a == f[1]
-            r == f[2]
-            t == f[3]
-        IN /\ r \in covered[a]
-           /\ (t - lastRefreshAt[<<a, r>>]) <= RefreshCadence
+\* N-16 Coverage-Conditional Drift is a STRUCTURAL property of the
+\* RaiseDrift action's enabling guard:
+\*
+\*     RaiseDrift(a, r) ==
+\*         /\ r \in covered[a]                                    (i)
+\*         /\ (clockTick - lastRefreshAt[<<a, r>>]) <= RefreshCadence  (ii)
+\*         /\ ...
+\*
+\* Earlier drafts expressed N-16 as a state invariant (∀f ∈ driftFlags:
+\* f's region is currently covered AND fresh), but ``driftFlags`` is
+\* append-only while ``covered`` and ``clockTick`` are mutable. After
+\* a flag is legitimately raised, a subsequent Probe can shrink
+\* coverage (or Tick can advance time past the freshness window) and
+\* historically-correct flags falsify the state-only form.
+\*
+\* The action guard is the operative enforcement: a flag can only be
+\* RAISED on a covered + fresh region; once raised it remains as a
+\* historical record. We no longer assert N-16 at the state level.
 
 \* N-17 Probe Battery Maintenance: after a battery version change, all
 \* regions for that agent must be removed from coverage until re-probed.
@@ -169,11 +184,12 @@ ProbeBatteryMaintenance ==
 \* but was initially never covered, no negative check is owed. Practically
 \* checked on state transitions via the Probe action's event emission.
 CapabilitySurfaceIntegrity ==
-    \A a \in Agents, r \in covered[a] :
-        \E e \in surfaceEvents :
-            /\ e.agent = a
-            /\ e.region = r
-            /\ e.kind = "entered"
-            /\ e.at <= lastRefreshAt[<<a, r>>]
+    \A a \in Agents :
+        \A r \in covered[a] :
+            \E e \in surfaceEvents :
+                /\ e.agent = a
+                /\ e.region = r
+                /\ e.kind = "entered"
+                /\ e.at <= lastRefreshAt[<<a, r>>]
 
 =============================================================================

@@ -1,0 +1,100 @@
+{
+  "manifest_version": "1.0.0",
+  "extension": {
+    "uri": "https://github.com/ravikiran438/pratyahara-nerve/v1",
+    "name": "Pratyahara NERVE Framework",
+    "description": "Neural-defense substrate: behavioral fingerprints, observer cohorts, trust posture.",
+    "version": "1.0.0",
+    "publisher": "Ravi Kiran Kadaboina",
+    "human_readable_spec": "https://doi.org/10.5281/zenodo.19628589"
+  },
+  "agent_card_payload_schema": {
+    "$defs": {
+      "NeuronType": {
+        "enum": [
+          "sensory",
+          "processing",
+          "motor",
+          "interneuron"
+        ],
+        "title": "NeuronType",
+        "type": "string"
+      }
+    },
+    "description": "NERVE-specific fields contributed to an A2A AgentCard.\n\nValidators detect NERVE support by the presence of an entry in\n``capabilities.extensions[]`` whose ``uri`` equals\n``NERVE_EXTENSION_URI``. The body of that entry SHOULD deserialize\nto this model.",
+    "properties": {
+      "version": {
+        "description": "NERVE protocol semver this agent implements.",
+        "title": "Version",
+        "type": "string"
+      },
+      "neuron_type": {
+        "$ref": "#/$defs/NeuronType",
+        "description": "The role this agent plays in the network: SENSORY accepts external inputs; PROCESSING transforms; MOTOR drives external side-effects; INTERNEURON routes between others."
+      },
+      "behavioral_fingerprint": {
+        "description": "Current ``sha256:<hex>`` fingerprint of this agent's output distribution embedding, computed per nerve.types.fingerprint. Validators check format only; semantic verification requires the embedding which lives with the observer.",
+        "title": "Behavioral Fingerprint",
+        "type": "string"
+      },
+      "trust_score": {
+        "description": "Last observer-consensus trust value in [0, 1].",
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "title": "Trust Score",
+        "type": "number"
+      },
+      "observer_ids": {
+        "description": "Identifiers of the MicroglialObservers monitoring this agent. Per N-1 each agent MUST be observed by at least 2 observers.",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 2,
+        "title": "Observer Ids",
+        "type": "array"
+      },
+      "myelination_levels": {
+        "additionalProperties": {
+          "type": "number"
+        },
+        "description": "Per-channel myelination map (channel_id -> level in [0, 1]). Empty when the agent has no established channels yet.",
+        "title": "Myelination Levels",
+        "type": "object"
+      },
+      "last_evaluated_at": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "ISO 8601 UTC of the most recent trust evaluation.",
+        "title": "Last Evaluated At"
+      },
+      "homeostasis_state": {
+        "default": "STABLE",
+        "description": "The network homeostasis_state observed at last evaluation. One of STABLE | STRESSED | CRITICAL | RECOVERY (see HomeostasisState).",
+        "title": "Homeostasis State",
+        "type": "string"
+      }
+    },
+    "required": [
+      "version",
+      "neuron_type",
+      "behavioral_fingerprint",
+      "trust_score",
+      "observer_ids"
+    ],
+    "title": "NeuralPostureRef",
+    "type": "object"
+  },
+  "wire_artefacts": [],
+  "invariants": [
+    "N-1: every AgentNeuron is observed by at least 2 MicroglialObservers.",
+    "N-7: behavioral_fingerprint contains no raw prompt or principal data.",
+    "NTE-1: decay_rate MUST exceed reinforcement_rate."
+  ]
+}
