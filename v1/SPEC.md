@@ -6,7 +6,7 @@
 - **Protocol version:** 1.0.0
 - **Manifest envelope version:** 1.0.0
 - **Publisher:** Ravi Kiran Kadaboina
-- **Paper / human-readable spec:** https://doi.org/10.5281/zenodo.19628589
+- **Paper / human-readable spec:** https://doi.org/10.5281/zenodo.19628588
 
 Neural-defense substrate: behavioral fingerprints, observer cohorts, trust posture.
 

@@ -5,6 +5,6 @@
 This URI (`https://ravikiran438.github.io/pratyahara-nerve/v1`) identifies
 version 1 of the NERVE protocol extension for A2A and MCP.
 
-- **Paper:** https://doi.org/10.5281/zenodo.19628589
+- **Paper:** https://doi.org/10.5281/zenodo.19628588
 - **Specification:** See the repository root
 - **Status:** Draft v0.1.0

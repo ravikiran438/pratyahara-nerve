@@ -1,7 +1,7 @@
 # Pratyahara NERVE
 
 **Status:** Draft v0.1.0
-**Paper:** [Pratyahara: A Neural Tissue Defense Model for Detecting Compromised Agents in Multi-Agent Networks](https://doi.org/10.5281/zenodo.19628589)
+**Paper:** [Pratyahara: A Neural Tissue Defense Model for Detecting Compromised Agents in Multi-Agent Networks](https://doi.org/10.5281/zenodo.19628588)
 **Extension URI:** `https://ravikiran438.github.io/pratyahara-nerve/v1`
 **License:** Apache 2.0
 
@@ -87,7 +87,7 @@ drift model.
 
 | Extension | URI | Adds | Paper |
 |---|---|---|---|
-| [Yathartha](./extensions/yathartha/) | `https://ravikiran438.github.io/pratyahara-nerve/extensions/yathartha/v1` | `CapabilityRegion`, `ProbeBatteryResult`, `CapabilitySurface`, `SurfaceChangeEvent`; invariants **N-16 Coverage-Conditional Drift**, **N-17 Probe Battery Maintenance**, **N-18 Capability Surface Integrity** | *[Yathartha: A Protocol-Layer Treatment of Jagged Intelligence in Autonomous Agent Networks](https://doi.org/10.5281/zenodo.19659633)* (Zenodo DOI 10.5281/zenodo.19659633) |
+| [Yathartha](./extensions/yathartha/) | `https://ravikiran438.github.io/pratyahara-nerve/extensions/yathartha/v1` | `CapabilityRegion`, `ProbeBatteryResult`, `CapabilitySurface`, `SurfaceChangeEvent`; invariants **N-16 Coverage-Conditional Drift**, **N-17 Probe Battery Maintenance**, **N-18 Capability Surface Integrity** | *[Yathartha: A Protocol-Layer Treatment of Jagged Intelligence in Autonomous Agent Networks](https://doi.org/10.5281/zenodo.19659632)* (Zenodo DOI 10.5281/zenodo.19659632) |
 
 **Why Yathartha exists.** Without a published capability surface, a
 `MicroglialObserver` cannot distinguish an agent that has *drifted* on a
@@ -147,8 +147,8 @@ code.
                   Compromised Agents in Multi-Agent Networks},
   year         = {2026},
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.19628589},
-  url          = {https://doi.org/10.5281/zenodo.19628589}
+  doi          = {10.5281/zenodo.19628588},
+  url          = {https://doi.org/10.5281/zenodo.19628588}
 }
 ```
 

@@ -224,7 +224,7 @@ Management, 2024). The information-economics treatment is Gans,
 [*A Model of Artificial Jagged Intelligence*](https://arxiv.org/abs/2601.07573)
 (arXiv:2601.07573, 2026). For the Pratyahara NERVE specification this
 extension refines, see the paper at
-[Zenodo DOI 10.5281/zenodo.19628589](https://doi.org/10.5281/zenodo.19628589).
-The Yathartha paper itself ([Zenodo DOI 10.5281/zenodo.19659633](https://doi.org/10.5281/zenodo.19659633)) carries the full
+[Zenodo DOI 10.5281/zenodo.19628588](https://doi.org/10.5281/zenodo.19628588).
+The Yathartha paper itself ([Zenodo DOI 10.5281/zenodo.19659632](https://doi.org/10.5281/zenodo.19659632)) carries the full
 specification, the TLA+ model, and the reference-implementation
 pointer.

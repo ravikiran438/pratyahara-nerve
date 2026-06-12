@@ -1,7 +1,7 @@
 # Yathartha: Capability Surface Extension
 
 **Paper:** *Yathartha: A Protocol-Layer Treatment of Jagged Intelligence in
-Autonomous Agent Networks* ([Zenodo DOI 10.5281/zenodo.19659633](https://doi.org/10.5281/zenodo.19659633)).
+Autonomous Agent Networks* ([Zenodo DOI 10.5281/zenodo.19659632](https://doi.org/10.5281/zenodo.19659632)).
 
 Yathartha extends the NERVE specification with a `CapabilitySurface`
 primitive and three derived safety invariants that condition behavioral

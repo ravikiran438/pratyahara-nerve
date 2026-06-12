@@ -6,7 +6,7 @@
     "description": "Distinguishes drift from jaggedness by requiring an observed capability baseline before flagging behavioral anomalies.",
     "version": "1.0.0",
     "publisher": "Ravi Kiran Kadaboina",
-    "human_readable_spec": "https://doi.org/10.5281/zenodo.19659633"
+    "human_readable_spec": "https://doi.org/10.5281/zenodo.19659632"
   },
   "agent_card_payload_schema": {
     "type": "object",
